@@ -1,0 +1,26 @@
+---
+import HeaderLink from "./HeaderLink.astro";
+import { SITE_TITLE } from "../consts";
+---
+
+<style></style>
+
+<header
+  class="fixed top-0 left-0 w-full h-auto h-min-[50px] z-[9999] px-[20px] border-b border-slate-900/10 bg-white/75 backdrop-blur transition-colors duration-500 supports-backdrop-blur:bg-white/60"
+>
+  <nav class="max-w-[960px] mx-auto">
+    <div
+      class="py-4 border-b border-slate-900/10 lg:border-0 dark:border-slate-300/10"
+    >
+      <div class="relative flex items-center w-full justify-between">
+        <h2 class="!m-0"><a href="/" class="text-[16px] font-bold flex items-center text-gray-900">{SITE_TITLE}</a></h2>
+        <div class="internal-links pl-[12px]">
+          <HeaderLink href="/">홈으로</HeaderLink>
+          <HeaderLink href="/blog/1">블로그</HeaderLink>
+          <HeaderLink href="/about">소개</HeaderLink>
+          <HeaderLink href="/search">검색</HeaderLink>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

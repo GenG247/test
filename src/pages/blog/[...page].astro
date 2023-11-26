@@ -1,0 +1,53 @@
+---
+import BaseHead from "../../components/BaseHead.astro";
+import PostCard from "../../components/PostCard.astro";
+import FormattedDate from "../../components/FormattedDate.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../../consts";
+import { getCollection } from "astro:content";
+import Pagination from "../../components/Pagination.astro";
+import Layout from "../../layouts/Layout.astro";
+
+export async function getStaticPaths() {
+  const allPosts = await getCollection("blog");
+  const pageSize = 2;
+  const pageCount = Math.ceil(allPosts.length / pageSize);
+  let paths: { params: { page: string } }[] = [];
+  for (let i = 1; i <= pageCount; i++) {
+    paths.push({ params: { page: i.toString() } } as {
+      params: { page: string };
+    });
+  }
+
+  return paths;
+}
+
+const page = parseInt(Astro.params.page ?? "1");
+const pageSize = 2;
+const startIndex = (page - 1) * pageSize;
+const allPosts = (await getCollection("blog")).sort(
+  (a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf()
+);
+const totalPosts = allPosts.length;
+const totalPages = Math.ceil(totalPosts / pageSize);
+const posts = allPosts.slice(startIndex, startIndex + pageSize);
+---
+
+<head>
+  <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+</head>
+<Layout>
+  <section>
+    {
+      posts.map((post) => (
+        <PostCard
+          slug={post.slug}
+          title={post.data.title}
+          desc={post.data.description}
+          date={post.data.pubDate}
+          image={post.data.heroImage}
+        />
+      ))
+    }
+    <Pagination totalPages={totalPages} currentPage={page} />
+  </section>
+</Layout>

@@ -1,0 +1,22 @@
+---
+import Header from '../components/Header.astro';
+import BaseHead from '../components/BaseHead.astro';
+
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+---
+<!DOCTYPE html>
+<html lang="ko">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body class="pt-[100px]">
+		<Header title={SITE_TITLE} />
+		<div class="max-w-[860px] mx-auto w-full">
+			<slot />
+		</div>
+	</body>
+</html>
